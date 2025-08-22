@@ -1,10 +1,15 @@
-"use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, type MutableRefObject } from "react";
 
-export default function CameraModal({ open, onClose, onCapture }) {
-  const videoRef = useRef(null);
-  const [stream, setStream] = useState(null);
-  const [error, setError] = useState(null);
+type CameraModalProps = {
+  open: boolean;
+  onClose: () => void;
+  onCapture: (file: File) => void;
+};
+
+export default function CameraModal({ open, onClose, onCapture }: CameraModalProps) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (open && typeof window !== "undefined" && navigator.mediaDevices) {
@@ -12,32 +17,35 @@ export default function CameraModal({ open, onClose, onCapture }) {
         .then((mediaStream) => {
           setStream(mediaStream);
           if (videoRef.current) {
-            videoRef.current.srcObject = mediaStream;
+            (videoRef.current as HTMLVideoElement).srcObject = mediaStream;
           }
         })
-        .catch((err) => setError("Camera access denied or unavailable."));
+        .catch(() => setError("Camera access denied or unavailable."));
     }
     return () => {
       if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
+        stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const handleCapture = () => {
     const video = videoRef.current;
     if (!video) return;
     const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    canvas.width = (video as HTMLVideoElement).videoWidth;
+    canvas.height = (video as HTMLVideoElement).videoHeight;
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    canvas.toBlob((blob) => {
-      if (blob) {
-        const file = new File([blob], "captured.jpg", { type: "image/jpeg" });
-        onCapture(file);
-      }
-    }, "image/jpeg");
+    if (ctx) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const file = new File([blob], "captured.jpg", { type: "image/jpeg" });
+          onCapture(file);
+        }
+      }, "image/jpeg");
+    }
   };
 
   if (!open) return null;
