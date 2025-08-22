@@ -3,7 +3,11 @@ import { useState } from "react";
 
 const CameraModal = dynamic(() => import("../components/CameraModal"), { ssr: false });
 
-export function useCameraUpload({ onImage }) {
+type UseCameraUploadProps = {
+  onImage: (event: { target: { files: File[] } }) => void;
+};
+
+export function useCameraUpload({ onImage }: UseCameraUploadProps) {
   const [cameraOpen, setCameraOpen] = useState(false);
 
   // Detect if mobile (simple check)
@@ -19,7 +23,7 @@ export function useCameraUpload({ onImage }) {
     }
   };
 
-  const handleCapture = (file) => {
+  const handleCapture = (file: File) => {
     setCameraOpen(false);
     if (file) {
       // Simulate a file input event for uploadImage
