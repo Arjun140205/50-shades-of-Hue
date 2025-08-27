@@ -1,8 +1,8 @@
-# PalettePro - The Color Palette Generator
+# 50 shades of Hue - The Color Palette Generator
 
 ## Overview:
 
-PalettePro is a web application built with Next.js 14, Tailwind, TypeScript, and ColorThief, offering users an intuitive colour palette generation experience. Upload an image, and PalettePro extracts hex colour names, and palettes for creative projects. See the design file [here](https://www.figma.com/file/suKqU6xECsRFMa2qqfdeZs/palettepro?type=design&mode=design&t=ZzT8epPGkgvgSAot-1).
+PalettePro is a web application built with Next.js 14, Tailwind, TypeScript, and ColorThief, offering users an intuitive colour palette generation experience. Upload an image, and 50 shades of Hue extracts hex colour names, and palettes for creative projects. See the design file [here](https://www.figma.com/file/suKqU6xECsRFMa2qqfdeZs/palettepro?type=design&mode=design&t=ZzT8epPGkgvgSAot-1).
 
 ## Key Features:
 
