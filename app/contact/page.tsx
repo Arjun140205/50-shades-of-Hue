@@ -13,11 +13,11 @@ export default function ContactPage() {
           </div>
           <div>
             <span className="block text-neutral-400 text-sm mb-1">GitHub</span>
-            <a href="https://github.com/arjunbirsingh" target="_blank" rel="noopener noreferrer" className="text-lg text-blue-400 hover:underline">github.com/arjunbirsingh</a>
+            <a href="https://github.com/Arjun140205" target="_blank" rel="noopener noreferrer" className="text-lg text-blue-400 hover:underline">github.com/arjunbirsingh</a>
           </div>
           <div>
             <span className="block text-neutral-400 text-sm mb-1">Twitter</span>
-            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="text-lg text-blue-400 hover:underline">@50shadesofhue</a>
+            <a href="https://x.com/Arjunbir_singhh" target="_blank" rel="noopener noreferrer" className="text-lg text-blue-400 hover:underline">@50shadesofhue</a>
           </div>
         </div>
       </div>
