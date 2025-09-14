@@ -19,7 +19,7 @@ export default function HomeInteriorPage() {
     const colorThief = new ColorThief();
     const palette = colorThief.getPalette(imageElement, 4);
     
-    const extractedColors = palette.map(rgb => ({
+    const extractedColors = palette.map((rgb: number[]) => ({
       rgb: rgb as [number, number, number],
       hex: '#' + rgb.map(x => {
         const hex = x.toString(16);
@@ -30,8 +30,9 @@ export default function HomeInteriorPage() {
     setColors(extractedColors);
   };
 
-  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const uploadImage = (event: React.ChangeEvent<HTMLInputElement> | { target: { files: File[] } }) => {
+    const files = 'files' in event.target ? event.target.files : null;
+    const file = files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
@@ -108,7 +109,7 @@ export default function HomeInteriorPage() {
             type="file"
             id="cameraInput"
             accept="image/*"
-            capture="camera"
+            capture="environment"
             hidden
             onChange={uploadImage}
           />
