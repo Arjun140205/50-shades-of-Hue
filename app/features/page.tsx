@@ -7,7 +7,7 @@ export default function FeaturesPage() {
       <div className="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-14 px-4 md:px-14 py-12">
         <div className="flex-1 flex flex-col gap-7 items-start">
           <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-sm">50 Shades of Hue Features</h1>
-          <p className="text-xl md:text-2xl text-neutral-400 max-w-2xl font-medium">Explore specialized color tools for every creative need. Choose a category below to see what's coming soon!</p>
+          <p className="text-xl md:text-2xl text-neutral-400 max-w-2xl font-medium">Explore specialized color tools for every creative need. Choose a category below to see features!</p>
         </div>
       </div>
       {/* Feature Cards */}
