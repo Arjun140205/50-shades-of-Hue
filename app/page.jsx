@@ -30,14 +30,14 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex flex-col min-h-screen bg-neutral-950 overflow-hidden">
+      <div className="w-full flex-1 relative min-h-[calc(100vh-4rem)]">
         {/* WebGL Background */}
-        <div className="absolute inset-0 -top-40 z-0">
+        <div className="fixed inset-0 -top-80">
           <WebGLShader />
         </div>
 
         {/* Hero Section */}
-        <section className="flex-1 w-full flex flex-col items-center pt-16 relative z-10">
+        <section className="relative w-full flex flex-col items-center pt-16 pb-32 z-10">
           <div className="w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-lg mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
               Effortless Color Palette Generation
@@ -83,7 +83,7 @@ export default function Home() {
 
             {/* Display Area */}
             {(uploadedImage || colorPalette) && (
-              <div className="w-full max-w-xl mt-12">
+              <div className="w-full max-w-xl mt-12 mb-20">
                 <DisplayImage
                   uploadedImage={uploadedImage}
                   colorPalette={colorPalette}
@@ -99,22 +99,7 @@ export default function Home() {
           onClose={() => cameraUpload.setCameraOpen(false)} 
           onCapture={cameraUpload.handleCapture} 
         />
-        
-        {/* Footer */}
-        <footer className="sticky bottom-0 w-full bg-neutral-950/80 backdrop-blur-md border-t border-neutral-800 py-4 mt-auto z-20">
-          <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-neutral-400 text-sm">© 2025 50 Shades of Hue. All rights reserved.</p>
-            <div className="flex items-center gap-6">
-              <a href="https://github.com/Arjun140205" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
-                GitHub
-              </a>
-              <a href="/contact" className="text-neutral-400 hover:text-white transition-colors">
-                Contact
-              </a>
-            </div>
-          </div>
-        </footer>
-      </main>
+      </div>
     </>
   );
 }
