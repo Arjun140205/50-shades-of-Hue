@@ -7,14 +7,22 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-    safelist: [
-      'delay-[var(--delay)]',
-      'duration-[var(--duration)]',
-      'ease-[var(--easing)]'
-    ],
+    
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
-  	extend: {
-  		backgroundImage: {
+    extend: {
+      transitionDelay: {
+        'var': 'var(--delay)',
+      },
+      transitionDuration: {
+        'var': 'var(--duration)',
+      },
+      transitionTimingFunction: {
+        'var': 'var(--easing)',
+      },
+      backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
   		},
