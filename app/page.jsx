@@ -4,6 +4,7 @@ import DisplayImage from "./components/DisplayImage";
 import ColorThief from "colorthief";
 import { useState } from "react";
 import { useCameraUpload } from "./hooks/useCameraUpload";
+import { WebGLShader } from "../components/ui/web-gl-shader";
 
 export default function Home() {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -28,45 +29,92 @@ export default function Home() {
   const cameraUpload = useCameraUpload({ onImage: uploadImage });
 
   return (
-    <section className="w-full flex flex-col items-center justify-center min-h-[80vh] pt-10 pb-10 overflow-x-hidden bg-neutral-950">
-      {/* Hero Section */}
-      <div className="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-14 px-4 md:px-14 py-12">
-        <div className="flex-1 flex flex-col gap-7 items-start">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-sm">Effortless Color Palette Generation</h1>
-          <p className="text-xl md:text-2xl text-neutral-400 max-w-2xl font-medium">Upload an image and instantly get a beautiful, designer-grade palette for your next project. Fast, accurate, and premium; 50 Shades of Hue is your creative color companion.</p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-6">
-            {/* Upload Image Button */}
-            <label htmlFor="file" className="inline-flex items-center gap-3 px-7 py-4 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-bold shadow-lg hover:scale-105 hover:shadow-2xl active:scale-95 transition-all duration-200 cursor-pointer text-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5v-9m0 0L8.25 7.5m3.75-3.75L15.75 7.5M12 7.5v9m0 0l3.75-3.75M12 16.5l-3.75-3.75" />
-              </svg>
-              Upload Image
-              <input type="file" id="file" hidden onChange={uploadImage} />
-            </label>
-            {/* Take Photo Button */}
-            <button
-              type="button"
-              className="inline-flex items-center gap-3 px-7 py-4 rounded-xl bg-blue-700 border border-blue-800 text-white font-bold shadow-lg hover:scale-105 hover:shadow-2xl active:scale-95 transition-all duration-200 cursor-pointer text-lg"
-              onClick={cameraUpload.handleCameraClick}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-              </svg>
-              Take Photo
-            </button>
+    <>
+      <main className="flex flex-col min-h-screen bg-neutral-950 overflow-hidden">
+        {/* WebGL Background */}
+        <div className="absolute inset-0 -top-40 z-0">
+          <WebGLShader />
+        </div>
+
+        {/* Hero Section */}
+        <section className="flex-1 w-full flex flex-col items-center pt-16 relative z-10">
+          <div className="w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-lg mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
+              Effortless Color Palette Generation
+            </h1>
+            <p className="text-lg text-neutral-300 font-medium max-w-2xl mb-12">
+              Upload an image and instantly get a beautiful, designer-grade palette for your next project. Fast, accurate, and premium; 50 Shades of Hue is your creative color companion.
+            </p>
+
+            {/* Button Group */}
+            <div className="w-full max-w-lg space-y-8">
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                {/* Upload Image Button */}
+                <label htmlFor="file" className="flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold shadow-lg hover:scale-105 hover:shadow-2xl active:scale-95 transition-all duration-200 cursor-pointer text-lg group hover:bg-white/15">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:scale-110 transition-transform">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                  </svg>
+                  Upload Image
+                  <input type="file" id="file" hidden onChange={uploadImage} />
+                </label>
+
+                {/* Take Photo Button */}
+                <button
+                  type="button"
+                  className="flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-blue-600/80 backdrop-blur-sm border border-blue-500/30 text-white font-bold shadow-lg hover:scale-105 hover:shadow-2xl active:scale-95 transition-all duration-200 cursor-pointer text-lg group hover:bg-blue-600"
+                  onClick={cameraUpload.handleCameraClick}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:scale-110 transition-transform">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                  </svg>
+                  Take Photo
+                </button>
+              </div>
+
+              {/* Helper Text */}
+              <p className="text-neutral-400 text-sm">
+                Click on the "Upload Image" button to select an image.
+              </p>
+            </div>
+
             {/* Hidden input for mobile camera capture */}
             <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden onChange={uploadImage} />
+
+            {/* Display Area */}
+            {(uploadedImage || colorPalette) && (
+              <div className="w-full max-w-xl mt-12">
+                <DisplayImage
+                  uploadedImage={uploadedImage}
+                  colorPalette={colorPalette}
+                />
+              </div>
+            )}
           </div>
-        </div>
-        <div className="flex-1 flex items-center justify-center w-full max-w-xl mx-auto">
-          <DisplayImage
-            uploadedImage={uploadedImage}
-            colorPalette={colorPalette}
-          />
-        </div>
-      </div>
-      {/* Camera Modal for desktop */}
-      <cameraUpload.CameraModal open={cameraUpload.cameraOpen} onClose={() => cameraUpload.setCameraOpen(false)} onCapture={cameraUpload.handleCapture} />
-    </section>
+        </section>
+
+        {/* Camera Modal for desktop */}
+        <cameraUpload.CameraModal 
+          open={cameraUpload.cameraOpen} 
+          onClose={() => cameraUpload.setCameraOpen(false)} 
+          onCapture={cameraUpload.handleCapture} 
+        />
+        
+        {/* Footer */}
+        <footer className="sticky bottom-0 w-full bg-neutral-950/80 backdrop-blur-md border-t border-neutral-800 py-4 mt-auto z-20">
+          <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-neutral-400 text-sm">© 2025 50 Shades of Hue. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <a href="https://github.com/Arjun140205" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
+                GitHub
+              </a>
+              <a href="/contact" className="text-neutral-400 hover:text-white transition-colors">
+                Contact
+              </a>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </>
   );
 }
