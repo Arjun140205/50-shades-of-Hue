@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ 
+const openSans = Open_Sans({ 
   subsets: ['latin'],
   display: 'swap',
-  fallback: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
   preload: true,
+  fallback: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+  variable: '--font-opensans',
   adjustFontFallback: true
 })
 
@@ -78,7 +79,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " bg-neutral-950 text-white min-h-screen flex flex-col"}>
+      <body className={`${openSans.className} bg-neutral-950 text-white min-h-screen flex flex-col`}>
         <Navbar />
         <main className="flex-1 w-full flex flex-col items-center justify-center">
           {children}
