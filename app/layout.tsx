@@ -18,29 +18,7 @@ export const metadata: Metadata = {
 
 
 
-// Designer Navbar
-function Navbar() {
-  return (
-    <nav className="w-full flex items-center justify-between px-6 md:px-12 py-4 border-b border-neutral-800 bg-neutral-950/95 sticky top-0 z-50 shadow-[0_2px_16px_0_rgba(0,0,0,0.08)]">
-      <a href="/" className="flex items-center gap-3 font-black text-2xl tracking-tight text-white hover:text-primary transition-colors select-none">
-        <span className="inline-block w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-green-400 flex items-center justify-center shadow-md">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" fill="white"/><circle cx="10" cy="10" r="6" fill="#22d3ee"/></svg>
-        </span>
-  50 Shades of Hue
-      </a>
-      <div className="hidden md:flex items-center gap-8">
-        <a href="/features" className="text-neutral-300 hover:text-white font-semibold text-base transition-colors">Features</a>
-        <a href="/about" className="text-neutral-300 hover:text-white font-semibold text-base transition-colors">About</a>
-        <a href="/contact" className="text-neutral-300 hover:text-white font-semibold text-base transition-colors">Contact</a>
-      </div>
-      <div className="md:hidden flex items-center">
-        <button className="text-neutral-400 hover:text-white p-2 rounded-lg focus:outline-none">
-          <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-      </div>
-    </nav>
-  );
-}
+import { NavBar } from './components/NavBar';
 
 
 // Designer Footer
@@ -124,7 +102,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${openSans.className} bg-neutral-950 text-white min-h-screen flex flex-col relative`}>
-        <Navbar />
+        <NavBar />
         {children}
         <Footer />
       </body>
