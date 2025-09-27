@@ -1,5 +1,4 @@
 "use client";
-
 import DisplayImage from "./components/DisplayImage";
 import ColorThief from "colorthief";
 import { useState } from "react";
