@@ -49,25 +49,49 @@ export default function Home() {
             <div className="w-full max-w-lg space-y-8">
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 {/* Upload Image Button */}
-                <label htmlFor="file" className="flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold shadow-lg hover:scale-105 hover:shadow-2xl active:scale-95 transition-all duration-200 cursor-pointer text-lg group hover:bg-white/15">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:scale-110 transition-transform">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                  </svg>
-                  Upload Image
-                  <input type="file" id="file" hidden onChange={uploadImage} />
+                <label htmlFor="file" className="relative flex-1 group">
+                  {/* Outer glow and shadow */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 to-white/5 blur-xl transform group-hover:scale-110 transition-all duration-300" />
+                  
+                  {/* Main button container */}
+                  <div className="relative flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-b from-white/20 to-white/5 backdrop-blur-xl shadow-[0_8px_20px_rgba(0,0,0,0.4),inset_0_2px_8px_rgba(255,255,255,0.4),inset_0_-2px_8px_rgba(0,0,0,0.2)] group-hover:shadow-[0_15px_30px_rgba(0,0,0,0.5),inset_0_2px_12px_rgba(255,255,255,0.4),inset_0_-2px_12px_rgba(0,0,0,0.2)] text-white font-bold cursor-pointer text-lg overflow-hidden transition-all duration-300 group-hover:transform group-hover:scale-[1.02] group-hover:-translate-y-1 group-active:scale-95 group-active:translate-y-1">
+                    {/* Light reflection effects */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-transparent opacity-50" />
+                    <div className="absolute inset-[-1px] bg-[radial-gradient(circle_at_50%_-20%,white,transparent_70%)] opacity-40" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.5),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Content */}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:scale-110 transition-transform relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                    </svg>
+                    <span className="relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Upload Image</span>
+                    <input type="file" id="file" hidden onChange={uploadImage} />
+                  </div>
                 </label>
 
                 {/* Take Photo Button */}
                 <button
                   type="button"
-                  className="flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-blue-600/80 backdrop-blur-sm border border-blue-500/30 text-white font-bold shadow-lg hover:scale-105 hover:shadow-2xl active:scale-95 transition-all duration-200 cursor-pointer text-lg group hover:bg-blue-600"
                   onClick={cameraUpload.handleCameraClick}
+                  className="relative flex-1 group"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:scale-110 transition-transform">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
-                  </svg>
-                  Take Photo
+                  {/* Outer glow and shadow */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-b from-blue-400/30 to-blue-600/5 blur-xl transform group-hover:scale-110 transition-all duration-300" />
+                  
+                  {/* Main button container */}
+                  <div className="relative flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-b from-blue-400/20 to-blue-600/5 backdrop-blur-xl shadow-[0_8px_20px_rgba(0,0,0,0.4),inset_0_2px_8px_rgba(59,130,246,0.4),inset_0_-2px_8px_rgba(0,0,0,0.2)] group-hover:shadow-[0_15px_30px_rgba(0,0,0,0.5),inset_0_2px_12px_rgba(59,130,246,0.4),inset_0_-2px_12px_rgba(0,0,0,0.2)] text-white font-bold cursor-pointer text-lg overflow-hidden transition-all duration-300 group-hover:transform group-hover:scale-[1.02] group-hover:-translate-y-1 group-active:scale-95 group-active:translate-y-1">
+                    {/* Light reflection effects */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-blue-300/40 via-transparent to-transparent opacity-50" />
+                    <div className="absolute inset-[-1px] bg-[radial-gradient(circle_at_50%_-20%,rgba(59,130,246,0.8),transparent_70%)] opacity-40" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.5),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Content */}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 group-hover:scale-110 transition-transform relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                    </svg>
+                    <span className="relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">Take Photo</span>
+                  </div>
                 </button>
               </div>
 
