@@ -24,8 +24,8 @@ import { NavBar } from './components/NavBar';
 // Designer Footer
 function Footer() {
   return (
-    <footer className="w-full border-t border-neutral-800 bg-neutral-950/95 py-10 mt-auto">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <footer className="w-full border-t border-neutral-800 bg-neutral-950/95 py-10 mt-auto relative z-50">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Brand Section */}
           <div className="flex flex-col space-y-4">
@@ -101,10 +101,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${openSans.className} bg-neutral-950 text-white min-h-screen flex flex-col relative`}>
-        <NavBar />
-        {children}
-        <Footer />
+      <body className={`${openSans.className} bg-neutral-950 text-white`}>
+        <div className="min-h-screen flex flex-col relative">
+          <div className="z-50 relative">
+            <NavBar />
+          </div>
+          <div className="flex-grow flex flex-col relative z-10">
+            {children}
+          </div>
+          <Footer />
+        </div>
       </body>
     </html>
   )
