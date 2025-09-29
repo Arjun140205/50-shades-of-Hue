@@ -1,13 +1,19 @@
 "use client";
 import DisplayImage from "./components/DisplayImage";
 import ColorThief from "colorthief";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCameraUpload } from "./hooks/useCameraUpload";
 import { WebGLShader } from "../components/ui/web-gl-shader";
 
 export default function Home() {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [colorPalette, setColorPalette] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Add effect to handle initial loading
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   const uploadImage = (e) => {
     const file = e.target.files[0];
@@ -28,23 +34,28 @@ export default function Home() {
   const cameraUpload = useCameraUpload({ onImage: uploadImage });
 
   return (
-    <>
-      <div className="w-full flex-1 relative min-h-screen">
-        {/* WebGL Background */}
-        <div className="fixed inset-0 -top-40 sm:-top-60">
-          <WebGLShader />
-        </div>
+    <div className="relative w-full overflow-hidden">
+      {/* WebGL Background */}
+      <div className="fixed inset-0 -top-40 sm:-top-60 z-0">
+        <WebGLShader />
+      </div>
 
         {/* Hero Section */}
-        <section className="relative w-full min-h-screen flex flex-col items-center justify-center pb-20 z-10">
-          <div className="w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center mt-8 sm:mt-0">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-lg mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
-              Effortless Color Palette Generation
-            </h1>
-            <p className="text-lg sm:text-xl text-neutral-300 font-medium max-w-2xl mb-14">
-              Upload an image and instantly get a beautiful, designer-grade palette for your next project. Fast, accurate, and premium; 50 Shades of Hue is your creative color companion.
-            </p>
+        <section className="relative w-full flex flex-col items-center z-10">
+          {/* Fixed height content area */}
+          <div className="min-h-[45vh] w-full flex items-center justify-center pt-24 pb-8">
+            <div className="w-full max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white drop-shadow-lg mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
+                Effortless Color Palette Generation
+              </h1>
+              <p className="text-lg sm:text-xl text-neutral-300 font-medium max-w-2xl mb-14">
+                Upload an image and instantly get a beautiful, designer-grade palette for your next project. Fast, accurate, and premium; 50 Shades of Hue is your creative color companion.
+              </p>
+            </div>
+          </div>
 
+          {/* Button and Display Area - Scrollable Section */}
+          <div className="w-full flex-1 flex flex-col items-center pb-32">
             {/* Button Group */}
             <div className="w-full max-w-lg space-y-8">
               <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -106,11 +117,13 @@ export default function Home() {
 
             {/* Display Area */}
             {(uploadedImage || colorPalette) && (
-              <div className="w-full max-w-xl mt-12 mb-20">
-                <DisplayImage
-                  uploadedImage={uploadedImage}
-                  colorPalette={colorPalette}
-                />
+              <div className="w-full max-w-xl mt-8">
+                <div className="relative backdrop-blur-sm bg-black/20 rounded-2xl p-4 shadow-xl">
+                  <DisplayImage
+                    uploadedImage={uploadedImage}
+                    colorPalette={colorPalette}
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -123,6 +136,5 @@ export default function Home() {
           onCapture={cameraUpload.handleCapture} 
         />
       </div>
-    </>
   );
 }
