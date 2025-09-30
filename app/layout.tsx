@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 
 import { NavBar } from './components/NavBar';
-
+import { SplashCursor } from './components/SplashCursor';
 
 // Designer Footer
 function Footer() {
@@ -102,6 +102,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${openSans.className} bg-neutral-950 text-white`}>
+        <SplashCursor />
         <div className="min-h-screen flex flex-col relative">
           <div className="z-50 relative">
             <NavBar />
