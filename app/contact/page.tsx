@@ -48,11 +48,11 @@ export default function ContactPage() {
             >
               <span className="block text-neutral-300 text-sm mb-2 transition-colors">Email</span>
               <a 
-                href="mailto:hello@50shadesofhue.com" 
+                href="mailto:arjunbirsingh1699@gmail.com" 
                 className="inline-flex items-center text-lg text-white group-hover/item:text-blue-400 transition-colors"
               >
                 <span className="relative">
-                  hello@50shadesofhue.com
+                  arjunbirsingh1699@gmail.com
                   <span className="absolute left-0 right-0 bottom-0 h-px bg-gradient-to-r from-blue-400 to-purple-400 transform scale-x-0 group-hover/item:scale-x-100 transition-transform duration-300" />
                 </span>
               </a>
@@ -94,7 +94,7 @@ export default function ContactPage() {
                 className="inline-flex items-center text-lg text-white group-hover/item:text-blue-400 transition-colors"
               >
                 <span className="relative">
-                  @50shadesofhue
+                  @Arjunbirsingh
                   <span className="absolute left-0 right-0 bottom-0 h-px bg-gradient-to-r from-blue-400 to-purple-400 transform scale-x-0 group-hover/item:scale-x-100 transition-transform duration-300" />
                 </span>
               </a>
