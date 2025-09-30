@@ -13,6 +13,9 @@ const config: Config = {
   },
   theme: {
     extend: {
+      animation: {
+        'splash-click': 'splash-click 0.5s ease-out forwards',
+      },
       transitionDelay: {
         'var': 'var(--delay)',
       },
