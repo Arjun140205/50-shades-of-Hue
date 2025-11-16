@@ -30,113 +30,200 @@ interface RoomVisualizationProps {
 
 const generateColorSchemes = (baseColors: Color[]): ColorScheme[] => {
   const schemes: ColorScheme[] = [];
-  const primaryColor = tinycolor(baseColors[0].hex);
   
-  // Helper function to ensure colors are visually pleasing
-  const adjustColor = (color: tinycolor.Instance): tinycolor.Instance => {
-    if (color.getBrightness() < 30) return color.lighten(10);
-    if (color.getBrightness() > 240) return color.darken(10);
-    return color;
+  // Get extracted colors
+  const color1 = tinycolor(baseColors[0].hex);
+  const color2 = baseColors.length > 1 ? tinycolor(baseColors[1].hex) : color1.clone();
+  const color3 = baseColors.length > 2 ? tinycolor(baseColors[2].hex) : color1.clone();
+  const color4 = baseColors.length > 3 ? tinycolor(baseColors[3].hex) : color2.clone();
+  
+  // Helper to lighten extracted colors for walls
+  const makeWallColor = (color: tinycolor.Instance, amount = 25): string => {
+    const lightened = color.clone().lighten(amount);
+    // Ensure it's light enough for walls
+    if (lightened.getBrightness() < 180) {
+      return lightened.lighten(10).toString();
+    }
+    return lightened.toString();
   };
 
-  // Helper function to create warmer version of a color
-  const warmify = (color: tinycolor.Instance): tinycolor.Instance => {
-    return color.spin(5).saturate(5);
-  };
-
-  // 1. Monochromatic Elegance
+  // 1. Scandinavian White - Uses extracted color as accent
   schemes.push({
-    name: "Monochromatic Elegance",
-    description: "Sophisticated depth with tonal variations",
-    style: "modern",
-    moodKeywords: ["sophisticated", "calm", "minimalist"],
+    name: "Scandinavian White",
+    description: "Crisp whites with your room's color as accent",
+    style: "scandinavian",
+    moodKeywords: ["bright", "airy", "minimal"],
     walls: {
-      center: primaryColor.toString(),
-      left: primaryColor.clone().darken(7).toString(),
-      right: primaryColor.clone().lighten(7).toString(),
-      trim: primaryColor.clone().darken(15).toString(),
-      accent: primaryColor.clone().saturate(10).toString()
+      center: '#F7F7F5',
+      left: '#EEEEEC',
+      right: '#FAFAF8',
+      trim: '#FFFFFF',
+      accent: makeWallColor(color1, 15)
     }
   });
 
-  // 2. Complementary Drama
-  const complement = primaryColor.complement();
+  // 2. Modern Sage - Uses extracted color blended with sage
   schemes.push({
-    name: "Complementary Drama",
-    description: "Bold statement with balanced contrasts",
+    name: "Modern Sage",
+    description: "Calming sage greens paired with your palette",
     style: "contemporary",
-    moodKeywords: ["dramatic", "bold", "striking"],
+    moodKeywords: ["natural", "fresh", "calming"],
     walls: {
-      center: complement.toString(),
-      left: adjustColor(primaryColor).toString(),
-      right: adjustColor(primaryColor).toString(),
-      trim: tinycolor.mix(primaryColor, complement, 50).darken(10).toString(),
-      accent: complement.saturate(10).toString()
+      center: '#B8C5B0',
+      left: makeWallColor(color1, 30),
+      right: '#C8D5C0',
+      trim: '#F5F5F0',
+      accent: color1.clone().toString()
     }
   });
 
-  // 3. Natural Harmony
-  const analogous = primaryColor.analogous(5);
+  // 3. Warm Terracotta - Uses extracted color as one wall
   schemes.push({
-    name: "Natural Harmony",
-    description: "Peaceful flow inspired by nature",
-    style: "organic",
-    moodKeywords: ["peaceful", "natural", "balanced"],
+    name: "Warm Terracotta",
+    description: "Mediterranean warmth featuring your room's tones",
+    style: "mediterranean",
+    moodKeywords: ["warm", "earthy", "inviting"],
     walls: {
-      center: analogous[2].toString(),
-      left: analogous[1].toString(),
-      right: analogous[3].toString(),
-      trim: analogous[0].darken(5).toString(),
-      accent: analogous[4].saturate(10).toString()
+      center: '#E4B5A0',
+      left: makeWallColor(color2, 25),
+      right: '#F4C5B0',
+      trim: '#FFF8F0',
+      accent: color2.clone().toString()
     }
   });
 
-  // 4. Rich Contrast
-  if (baseColors.length > 1) {
-    const secondaryColor = tinycolor(baseColors[1].hex);
-    schemes.push({
-      name: "Rich Contrast",
-      description: "Dynamic interplay of extracted colors",
-      style: "eclectic",
-      moodKeywords: ["vibrant", "energetic", "unique"],
-      walls: {
-        center: adjustColor(secondaryColor).toString(),
-        left: adjustColor(primaryColor).toString(),
-        right: tinycolor.mix(primaryColor, secondaryColor, 30).toString(),
-        trim: tinycolor.mix(primaryColor, secondaryColor, 70).darken(10).toString(),
-        accent: secondaryColor.saturate(15).toString()
-      }
-    });
-  }
-
-  // 5. Cozy Warmth
+  // 4. Coastal Blue - Uses extracted color as accent
   schemes.push({
-    name: "Cozy Warmth",
-    description: "Warm and inviting atmosphere",
+    name: "Coastal Blue",
+    description: "Ocean-inspired blues with your color accents",
+    style: "coastal",
+    moodKeywords: ["tranquil", "airy", "refreshing"],
+    walls: {
+      center: '#C5D5E0',
+      left: '#B5C5D0',
+      right: makeWallColor(color1, 30),
+      trim: '#FFFFFF',
+      accent: color1.clone().toString()
+    }
+  });
+
+  // 5. Soft Greige - Uses extracted color as center wall
+  schemes.push({
+    name: "Soft Greige",
+    description: "Timeless neutrals anchored by your room's color",
+    style: "transitional",
+    moodKeywords: ["versatile", "timeless", "elegant"],
+    walls: {
+      center: makeWallColor(color1, 28),
+      left: '#C9C0B5',
+      right: '#E9E0D5',
+      trim: '#FFFFFF',
+      accent: color1.clone().toString()
+    }
+  });
+
+  // 6. Blush & Cream - Uses extracted color as side wall
+  schemes.push({
+    name: "Blush & Cream",
+    description: "Gentle pinks complemented by your palette",
+    style: "romantic",
+    moodKeywords: ["soft", "elegant", "feminine"],
+    walls: {
+      center: '#F5E6E8',
+      left: makeWallColor(color3, 30),
+      right: '#FFF6F8',
+      trim: '#FFFFFF',
+      accent: color3.clone().toString()
+    }
+  });
+
+  // 7. Moody Charcoal - Uses extracted color as accent
+  schemes.push({
+    name: "Moody Charcoal",
+    description: "Dramatic grays with bold color accents",
+    style: "industrial",
+    moodKeywords: ["dramatic", "modern", "bold"],
+    walls: {
+      center: '#4A5568',
+      left: '#3A4558',
+      right: '#5A6578',
+      trim: '#2D3748',
+      accent: color2.clone().saturate(20).toString()
+    }
+  });
+
+  // 8. Warm Honey - Uses extracted color as center wall
+  schemes.push({
+    name: "Warm Honey",
+    description: "Golden warmth featuring your room's tones",
     style: "traditional",
-    moodKeywords: ["warm", "inviting", "comfortable"],
+    moodKeywords: ["rich", "warm", "cozy"],
     walls: {
-      center: warmify(primaryColor).toString(),
-      left: warmify(primaryColor.clone()).darken(5).toString(),
-      right: warmify(primaryColor.clone()).lighten(5).toString(),
-      trim: warmify(primaryColor.clone()).darken(15).toString(),
-      accent: warmify(primaryColor.clone()).saturate(20).toString()
+      center: makeWallColor(color2, 25),
+      left: '#D8C5A8',
+      right: '#F8E5C8',
+      trim: '#FFF8F0',
+      accent: color2.clone().toString()
     }
   });
 
-  // 6. Split Complementary
-  const splitComplements = primaryColor.splitcomplement();
+  // 9. Lavender Mist - Uses extracted color as side wall
   schemes.push({
-    name: "Creative Energy",
-    description: "Balanced yet energetic color story",
-    style: "artistic",
-    moodKeywords: ["creative", "dynamic", "expressive"],
+    name: "Lavender Mist",
+    description: "Dreamy lavenders with your color harmony",
+    style: "contemporary",
+    moodKeywords: ["calming", "dreamy", "soft"],
     walls: {
-      center: adjustColor(splitComplements[0]).toString(),
-      left: adjustColor(splitComplements[1]).toString(),
-      right: adjustColor(splitComplements[2]).toString(),
-      trim: tinycolor.mix(splitComplements[1], splitComplements[2], 50).darken(10).toString(),
-      accent: primaryColor.saturate(20).toString()
+      center: '#D5D0E0',
+      left: makeWallColor(color4, 30),
+      right: '#E5E0F0',
+      trim: '#FFFFFF',
+      accent: color4.clone().toString()
+    }
+  });
+
+  // 10. Earthy Tones - Uses multiple extracted colors
+  schemes.push({
+    name: "Earthy Tones",
+    description: "Natural palette built from your room's colors",
+    style: "organic",
+    moodKeywords: ["natural", "grounded", "harmonious"],
+    walls: {
+      center: makeWallColor(color1, 25),
+      left: makeWallColor(color2, 28),
+      right: makeWallColor(color3, 30),
+      trim: '#F5F5F0',
+      accent: color1.clone().toString()
+    }
+  });
+
+  // 11. Navy & Ivory - Uses extracted color as accent
+  schemes.push({
+    name: "Navy & Ivory",
+    description: "Classic navy with your color as statement accent",
+    style: "classic",
+    moodKeywords: ["timeless", "elegant", "refined"],
+    walls: {
+      center: '#2C3E50',
+      left: '#1C2E40',
+      right: '#3C4E60',
+      trim: '#FFFEF7',
+      accent: color1.clone().saturate(15).toString()
+    }
+  });
+
+  // 12. Vibrant Mix - Uses all extracted colors
+  schemes.push({
+    name: "Vibrant Mix",
+    description: "Dynamic blend of all your room's colors",
+    style: "eclectic",
+    moodKeywords: ["vibrant", "unique", "energetic"],
+    walls: {
+      center: makeWallColor(color1, 25),
+      left: makeWallColor(color2, 25),
+      right: makeWallColor(color3, 25),
+      trim: '#FFFFFF',
+      accent: color4.clone().toString()
     }
   });
 
@@ -151,127 +238,199 @@ const RoomVisualization: React.FC<RoomVisualizationProps> = ({ colors }) => {
   return (
     <div className="space-y-6">
       {/* Room Preview */}
-      <div className="room-container w-full aspect-[16/9] relative rounded-xl overflow-hidden shadow-2xl">
+      <div className="room-container w-full aspect-[4/3] sm:aspect-[16/10] relative rounded-xl overflow-hidden shadow-2xl bg-neutral-950">
         <div
           className="room w-full h-full relative"
           style={{
-            perspective: '2000px',
+            perspective: '1200px',
+            perspectiveOrigin: '50% 45%',
             transformStyle: 'preserve-3d',
           }}
         >
-          {/* Center Wall */}
+          {/* Back Wall (Center) - More realistic depth */}
           <div
-            className="absolute top-[5%] left-[15%] right-[15%] bottom-[5%] transform-gpu"
+            className="absolute transform-gpu"
             style={{
+              top: '10%',
+              left: '20%',
+              width: '60%',
+              height: '65%',
               backgroundColor: currentScheme.walls.center,
-              boxShadow: 'inset 0 0 80px rgba(0,0,0,0.2)',
+              transform: 'translateZ(-150px) scale(1.15)',
+              boxShadow: 'inset 0 0 100px rgba(0,0,0,0.3), 0 10px 40px rgba(0,0,0,0.4)',
             }}
           >
-            {/* Wall Trim */}
+            {/* Baseboard */}
             <div 
-              className="absolute bottom-0 left-0 right-0 h-[5%]"
+              className="absolute bottom-0 left-0 right-0 h-[8%]"
               style={{ 
                 backgroundColor: currentScheme.walls.trim,
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+                boxShadow: 'inset 0 3px 6px rgba(0,0,0,0.3), 0 -2px 4px rgba(0,0,0,0.2)'
+              }}
+            />
+            {/* Crown Molding */}
+            <div 
+              className="absolute top-0 left-0 right-0 h-[4%]"
+              style={{ 
+                backgroundColor: currentScheme.walls.trim,
+                boxShadow: 'inset 0 -2px 4px rgba(0,0,0,0.2)'
               }}
             />
           </div>
 
-          {/* Left Wall */}
+          {/* Left Wall - Enhanced 3D perspective */}
           <div
-            className="absolute top-[5%] left-0 w-[15%] bottom-[5%] transform-gpu origin-right"
+            className="absolute transform-gpu origin-right"
             style={{
+              top: '10%',
+              left: '0%',
+              width: '25%',
+              height: '65%',
               backgroundColor: currentScheme.walls.left,
-              transform: 'rotateY(45deg)',
-              boxShadow: 'inset -15px 0 30px rgba(0,0,0,0.25)',
+              transform: 'rotateY(55deg) translateZ(-20px)',
+              boxShadow: 'inset -30px 0 60px rgba(0,0,0,0.4)',
             }}
           >
-            {/* Wall Trim */}
+            {/* Baseboard */}
             <div 
-              className="absolute bottom-0 left-0 right-0 h-[5%]"
+              className="absolute bottom-0 left-0 right-0 h-[8%]"
               style={{ 
                 backgroundColor: currentScheme.walls.trim,
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+                boxShadow: 'inset 0 3px 6px rgba(0,0,0,0.3)'
+              }}
+            />
+            {/* Crown Molding */}
+            <div 
+              className="absolute top-0 left-0 right-0 h-[4%]"
+              style={{ 
+                backgroundColor: currentScheme.walls.trim,
+                boxShadow: 'inset 0 -2px 4px rgba(0,0,0,0.2)'
               }}
             />
           </div>
 
-          {/* Right Wall */}
+          {/* Right Wall - Enhanced 3D perspective */}
           <div
-            className="absolute top-[5%] right-0 w-[15%] bottom-[5%] transform-gpu origin-left"
+            className="absolute transform-gpu origin-left"
             style={{
+              top: '10%',
+              right: '0%',
+              width: '25%',
+              height: '65%',
               backgroundColor: currentScheme.walls.right,
-              transform: 'rotateY(-45deg)',
-              boxShadow: 'inset 15px 0 30px rgba(0,0,0,0.25)',
+              transform: 'rotateY(-55deg) translateZ(-20px)',
+              boxShadow: 'inset 30px 0 60px rgba(0,0,0,0.4)',
             }}
           >
-            {/* Wall Trim */}
+            {/* Baseboard */}
             <div 
-              className="absolute bottom-0 left-0 right-0 h-[5%]"
+              className="absolute bottom-0 left-0 right-0 h-[8%]"
               style={{ 
                 backgroundColor: currentScheme.walls.trim,
-                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+                boxShadow: 'inset 0 3px 6px rgba(0,0,0,0.3)'
+              }}
+            />
+            {/* Crown Molding */}
+            <div 
+              className="absolute top-0 left-0 right-0 h-[4%]"
+              style={{ 
+                backgroundColor: currentScheme.walls.trim,
+                boxShadow: 'inset 0 -2px 4px rgba(0,0,0,0.2)'
               }}
             />
           </div>
 
-          {/* Floor */}
+          {/* Floor - Realistic perspective */}
           <div
-            className="absolute bottom-0 left-0 right-0 h-[5%]"
+            className="absolute transform-gpu origin-top"
             style={{
-              background: 'linear-gradient(45deg, #2a2a2a 0%, #3a3a3a 100%)',
+              bottom: '0%',
+              left: '5%',
+              right: '5%',
+              height: '25%',
+              background: 'linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%)',
+              transform: 'rotateX(75deg) translateZ(-50px)',
+              boxShadow: 'inset 0 10px 30px rgba(0,0,0,0.5)',
             }}
           />
 
-          {/* Ceiling */}
+          {/* Ceiling - Realistic perspective */}
           <div
-            className="absolute top-0 left-0 right-0 h-[5%]"
+            className="absolute transform-gpu origin-bottom"
             style={{
-              backgroundColor: '#ffffff',
-              boxShadow: 'inset 0 -10px 20px rgba(0,0,0,0.1)',
+              top: '0%',
+              left: '5%',
+              right: '5%',
+              height: '15%',
+              backgroundColor: '#f5f5f5',
+              transform: 'rotateX(-75deg) translateZ(-50px)',
+              boxShadow: 'inset 0 -10px 30px rgba(0,0,0,0.15)',
             }}
           />
 
-          {/* Ambient Light Effect */}
+          {/* Accent Decor - Picture Frame on back wall */}
+          <div
+            className="absolute transform-gpu"
+            style={{
+              top: '25%',
+              left: '42%',
+              width: '16%',
+              height: '20%',
+              backgroundColor: currentScheme.walls.accent,
+              transform: 'translateZ(-145px) scale(1.15)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.1)',
+              border: `4px solid ${currentScheme.walls.trim}`,
+            }}
+          />
+
+          {/* Ambient Lighting Effects */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'radial-gradient(circle at 50% 50%, transparent 50%, rgba(0,0,0,0.1) 100%)',
+              background: 'radial-gradient(ellipse at 50% 30%, transparent 30%, rgba(0,0,0,0.2) 100%)',
+            }}
+          />
+          
+          {/* Soft vignette */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.3) 100%)',
             }}
           />
         </div>
       </div>
 
       {/* Color Scheme Selector */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {colorSchemes.map((scheme, index) => (
           <button
             key={scheme.name}
             onClick={() => setSelectedScheme(index)}
-            className={`p-4 rounded-xl transition-all duration-300 ${
+            className={`p-3 sm:p-4 rounded-xl transition-all duration-300 text-left ${
               selectedScheme === index
-                ? 'bg-neutral-800 ring-2 ring-blue-500 shadow-lg'
+                ? 'bg-neutral-800 ring-2 ring-blue-500 shadow-lg scale-[1.02]'
                 : 'bg-neutral-900 hover:bg-neutral-800 hover:shadow-md'
             }`}
           >
-            <div className="space-y-4">
+            <div className="space-y-3">
               {/* Header Section with Title and Style */}
-              <div className="space-y-2">
-                <h3 className="text-lg text-white font-medium leading-tight">{scheme.name}</h3>
-                <span className="inline-block px-3 py-1 bg-neutral-700 rounded-md text-xs font-medium text-neutral-300">
+              <div className="space-y-1.5">
+                <h3 className="text-base sm:text-lg text-white font-medium leading-tight">{scheme.name}</h3>
+                <span className="inline-block px-2.5 py-0.5 bg-neutral-700 rounded-md text-xs font-medium text-neutral-300">
                   {scheme.style}
                 </span>
               </div>
               
               {/* Color Swatches */}
-              <div className="flex flex-wrap gap-2 p-2 bg-neutral-950/30 rounded-lg">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 p-2 bg-neutral-950/30 rounded-lg">
                 {Object.entries(scheme.walls).map(([key, color]) => (
                   <div key={key} className="relative group">
                     <div
-                      className="w-10 h-10 rounded-lg shadow-sm ring-1 ring-white/5"
+                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg shadow-sm ring-1 ring-white/5 transition-transform hover:scale-110"
                       style={{ backgroundColor: color }}
                     />
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs bg-black text-white rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
                       {key.charAt(0).toUpperCase() + key.slice(1)}
                     </div>
                   </div>
@@ -279,7 +438,7 @@ const RoomVisualization: React.FC<RoomVisualizationProps> = ({ colors }) => {
               </div>
 
               {/* Description */}
-              <p className="text-neutral-400 text-sm min-h-[2.5rem]">{scheme.description}</p>
+              <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed">{scheme.description}</p>
 
               {/* Keywords */}
               <div className="flex flex-wrap gap-1.5">
