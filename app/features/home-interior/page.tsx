@@ -116,27 +116,29 @@ export default function HomeInteriorPage() {
         </div>
 
         {/* Content Area */}
-        <div className="grid md:grid-cols-2 gap-8 items-start">
-          {/* Original Image */}
-          {uploadedImage && (
-            <div className="bg-neutral-900 p-4 rounded-xl border border-neutral-800">
+        {uploadedImage && (
+          <div className="space-y-8">
+            {/* Original Image */}
+            <div className="bg-neutral-900 p-4 sm:p-6 rounded-xl border border-neutral-800">
               <h2 className="text-xl font-bold text-white mb-4">Original Room</h2>
-              <img
-                src={uploadedImage}
-                alt="Uploaded room"
-                className="w-full rounded-lg shadow-lg"
-              />
+              <div className="flex justify-center">
+                <img
+                  src={uploadedImage}
+                  alt="Uploaded room"
+                  className="max-w-full h-auto rounded-lg shadow-lg max-h-[400px] sm:max-h-[500px] object-contain"
+                />
+              </div>
             </div>
-          )}
 
-          {/* Room Visualization */}
-          {colors.length > 0 && (
-            <div className="bg-neutral-900 p-4 rounded-xl border border-neutral-800">
-              <h2 className="text-xl font-bold text-white mb-4">Color Visualization</h2>
-              <RoomVisualization colors={colors} />
-            </div>
-          )}
-        </div>
+            {/* Room Visualization */}
+            {colors.length > 0 && (
+              <div className="bg-neutral-900 p-4 sm:p-6 rounded-xl border border-neutral-800">
+                <h2 className="text-xl font-bold text-white mb-4">Color Themes</h2>
+                <RoomVisualization colors={colors} />
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Color Swatches */}
         {colors.length > 0 && (
